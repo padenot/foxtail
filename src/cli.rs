@@ -20,9 +20,6 @@ pub struct Args {
     #[arg(long = "print-config")]
     pub print_config: bool,
 
-    #[arg(long = "detect-background")]
-    pub detect_background: bool,
-
     #[arg(long = "config")]
     pub config_path: Option<String>,
 

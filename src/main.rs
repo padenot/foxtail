@@ -10,7 +10,7 @@ use std::io::{self, Read};
 
 // Re-exports for tests and external use
 pub use cli::{Args, BackgroundMode, ColorMode};
-pub use colors::{adjust_colors_for_background, detect_light_background, parse_color};
+pub use colors::{adjust_colors_for_background, parse_color};
 pub use config::{dump_config, load_config_with_path_override, Config, Colors, ColorSpec, Visual, default_format, get_symbol};
 pub use git::{commit_warning_color, format_duration_ms};
 pub use render::{abbreviate_path, render_formatted, render_warning};
@@ -24,23 +24,6 @@ fn main() {
 
     if args.print_config {
         dump_config();
-        return;
-    }
-
-    if args.detect_background {
-        println!("Detecting terminal background...");
-        match termbg::theme(std::time::Duration::from_millis(100)) {
-            Ok(termbg::Theme::Light) => println!("Detected: Light background"),
-            Ok(termbg::Theme::Dark) => println!("Detected: Dark background"),
-            Err(e) => println!("Detection failed: {} (defaulting to dark)", e),
-        }
-        let is_light = detect_light_background();
-        println!("Using: {} background", if is_light { "light" } else { "dark" });
-
-        let config = load_config_with_path_override(None).0;
-        let colors = colors::get_colors(config.colors.as_ref(), is_light);
-        println!("Config has colors: {}", config.colors.is_some());
-        println!("Model color: {:?}", colors.model);
         return;
     }
 
@@ -83,7 +66,7 @@ fn main() {
     let is_light_bg = match args.background {
         BackgroundMode::Light => true,
         BackgroundMode::Dark => false,
-        BackgroundMode::Auto => config.light_background.unwrap_or_else(detect_light_background),
+        BackgroundMode::Auto => config.light_background.unwrap_or(false),
     };
     let mut colors = colors::get_colors(config.colors.as_ref(), is_light_bg);
     if config.colors.is_some() { colors = adjust_colors_for_background(colors, is_light_bg); }

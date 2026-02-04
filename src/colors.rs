@@ -53,20 +53,6 @@ pub fn color_from_spec(spec: &ColorSpec) -> Color {
     Rgb(r, g, b)
 }
 
-pub fn detect_light_background() -> bool {
-    match termbg::theme(std::time::Duration::from_millis(500)) {
-        Ok(termbg::Theme::Light) => return true,
-        Ok(termbg::Theme::Dark) => return false,
-        Err(_) => {}
-    }
-    if let Ok(colorfgbg) = std::env::var("COLORFGBG") {
-        if let Some(bg) = colorfgbg.split(';').nth(1) {
-            if let Ok(bg_num) = bg.parse::<u8>() { return bg_num >= 8; }
-        }
-    }
-    false
-}
-
 pub fn gradient_green_to_red(percentage: f64, _bg: (u8, u8, u8), is_light_bg: bool) -> Color {
     let percentage = percentage.clamp(0.0, 100.0);
     let (green, yellow, red) = if is_light_bg {

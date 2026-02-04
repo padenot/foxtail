@@ -12,8 +12,7 @@ git status, session stats, cost, cache, etc.
 - Flags:
   - `--print-config` print resolved config and a complete example
   - `--config <FILE>` use a specific config path
-  - `--detect-background` probe terminal background
-  - `--background {auto|light|dark}` override background detection/config
+  - `--background {auto|light|dark}` set background mode (auto uses config, defaults to dark)
   - `--color {auto|always|never}` control ANSI color (respects `NO_COLOR`, `CLICOLOR`, `CLICOLOR_FORCE` when `auto`)
   - `--no-git` disable Git integration regardless of config
 
