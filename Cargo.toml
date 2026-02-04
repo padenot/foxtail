@@ -1,6 +1,6 @@
 [package]
 name = "foxtail"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 description = "Status line for Claude Code users at Mozilla"
 repository = "https://github.com/padenot/foxline"
