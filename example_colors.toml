@@ -1,0 +1,16 @@
+# Example color configuration for foxtail
+# Place this in ~/.claude/statusline.toml
+
+enable_background = true
+use_emojis = true
+
+# Note: Color configuration requires specific TOML enum syntax
+# Colors are defined using one of these formats:
+# - RGB: background = "Rgb([240, 160, 80])"
+# - Hex: model = "Hex(\"#F0A050\")"
+# - HSL: separator = "Hsl(\"hsl(30, 85%, 63%)\")"
+
+[colors]
+background = "Rgb([240, 160, 80])"
+model = "Rgb([255, 255, 255])"
+separator = "Rgb([220, 100, 0])"
