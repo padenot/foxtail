@@ -1,3 +1,6 @@
+[workspace]
+members = [".", "version-check"]
+
 [package]
 name = "foxtail"
 version = "0.1.1"
@@ -6,6 +9,11 @@ description = "Status line for Claude Code users at Mozilla"
 repository = "https://github.com/padenot/foxline"
 homepage = "https://github.com/padenot/foxline"
 license = "MIT OR Apache-2.0"
+
+[package.metadata.binstall]
+pkg-url = "{ repo }/releases/download/v{ version }/{ name }-{ version }-{ target }.{ archive-format }"
+bin-dir = "{ bin }{ binary-ext }"
+pkg-fmt = "tgz"
 
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
