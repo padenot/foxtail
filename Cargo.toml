@@ -1,9 +1,9 @@
 [workspace]
-members = [".", "version-check"]
+members = ["."]
 
 [package]
 name = "foxtail"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 description = "Status line for Claude Code users at Mozilla"
 repository = "https://github.com/padenot/foxline"
@@ -23,6 +23,7 @@ nu-ansi-term = "0.50"
 toml = "0.8"
 dirs = "5.0"
 clap = { version = "4.5", features = ["derive"] }
+moz-cli-version-check = "0.1"
 
 [[bin]]
 name = "foxtail"

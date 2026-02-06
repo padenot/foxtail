@@ -15,7 +15,12 @@ pub enum BackgroundMode {
 }
 
 #[derive(Debug, Parser)]
-#[command(name = "foxtail", version, about = "Status line renderer for foxtail", disable_help_subcommand = true)]
+#[command(
+    name = "foxtail",
+    version,
+    about = "Status line renderer for foxtail",
+    disable_help_subcommand = true
+)]
 pub struct Args {
     #[arg(long = "print-config")]
     pub print_config: bool,
@@ -31,6 +36,5 @@ pub struct Args {
 
     #[arg(long = "no-git")]
     pub no_git: bool,
-
     // ASCII flag removed: always render the fun fox art when possible
 }

@@ -85,12 +85,24 @@ pub struct Config {
     pub warning_message: Option<String>,
 }
 
-pub fn default_warn_threshold() -> f64 { 20.0 }
-pub fn default_enable_git() -> bool { true }
-pub fn default_use_emojis() -> bool { false }
-pub fn default_threshold_green() -> u64 { 100 }
-pub fn default_threshold_yellow() -> u64 { 500 }
-pub fn default_threshold_orange() -> u64 { 1000 }
+pub fn default_warn_threshold() -> f64 {
+    20.0
+}
+pub fn default_enable_git() -> bool {
+    true
+}
+pub fn default_use_emojis() -> bool {
+    false
+}
+pub fn default_threshold_green() -> u64 {
+    100
+}
+pub fn default_threshold_yellow() -> u64 {
+    500
+}
+pub fn default_threshold_orange() -> u64 {
+    1000
+}
 
 pub fn default_format() -> String {
     "{head} | {model} | {cwdcompact} | {duration} | {ctx} | {gitdelta} | {claudedelta} | {cost} | {cache} | {tail}".to_string()
@@ -117,7 +129,9 @@ impl Default for Config {
 }
 
 pub fn get_symbol(key: &str, config: &Config) -> String {
-    if let Some(custom) = config.symbols.get(key) { return custom.clone(); }
+    if let Some(custom) = config.symbols.get(key) {
+        return custom.clone();
+    }
     let (emoji, text) = match key {
         "cwd" => ("📁 ", "cwd:"),
         "time" => ("⏱ ", ""),
@@ -129,7 +143,11 @@ pub fn get_symbol(key: &str, config: &Config) -> String {
         "cache" => ("🗄 ", "cache:"),
         _ => ("", ""),
     };
-    if config.use_emojis { emoji.to_string() } else { text.to_string() }
+    if config.use_emojis {
+        emoji.to_string()
+    } else {
+        text.to_string()
+    }
 }
 
 pub fn load_config_with_path_override(override_path: Option<&str>) -> (Config, Option<String>) {
@@ -142,9 +160,18 @@ pub fn load_config_with_path_override(override_path: Option<&str>) -> (Config, O
     }
 
     let config_paths = [
-        dirs::home_dir().map(|mut p| { p.push(".claude/statusline.toml"); p }),
-        dirs::home_dir().map(|mut p| { p.push(".mozbuild/foxtail.toml"); p }),
-        dirs::config_dir().map(|mut p| { p.push("foxtail/config.toml"); p }),
+        dirs::home_dir().map(|mut p| {
+            p.push(".claude/statusline.toml");
+            p
+        }),
+        dirs::home_dir().map(|mut p| {
+            p.push(".mozbuild/foxtail.toml");
+            p
+        }),
+        dirs::config_dir().map(|mut p| {
+            p.push("foxtail/config.toml");
+            p
+        }),
     ];
 
     for path in config_paths.iter().flatten() {
@@ -164,16 +191,30 @@ pub fn load_config_with_path() -> (Config, Option<String>) {
 pub fn dump_config() {
     let (config, config_path) = load_config_with_path();
     println!("Configuration:\n==============\n");
-    if let Some(path) = config_path.as_ref() { println!("Loaded from: {}\n", path); } else {
+    if let Some(path) = config_path.as_ref() {
+        println!("Loaded from: {}\n", path);
+    } else {
         println!("No config file found. Using defaults.\n");
         println!("Checked locations:");
-        if let Some(mut p) = dirs::home_dir() { p.push(".claude/statusline.toml"); println!("  - {}", p.display()); }
-        if let Some(mut p) = dirs::home_dir() { p.push(".mozbuild/foxtail.toml"); println!("  - {}", p.display()); }
-        if let Some(mut p) = dirs::config_dir() { p.push("foxtail/config.toml"); println!("  - {}", p.display()); }
+        if let Some(mut p) = dirs::home_dir() {
+            p.push(".claude/statusline.toml");
+            println!("  - {}", p.display());
+        }
+        if let Some(mut p) = dirs::home_dir() {
+            p.push(".mozbuild/foxtail.toml");
+            println!("  - {}", p.display());
+        }
+        if let Some(mut p) = dirs::config_dir() {
+            p.push("foxtail/config.toml");
+            println!("  - {}", p.display());
+        }
         println!();
     }
     println!("Current configuration:\n---------------------");
-    match toml::to_string(&config) { Ok(t) => println!("{}", t), Err(e) => eprintln!("Error serializing config: {}", e) }
+    match toml::to_string(&config) {
+        Ok(t) => println!("{}", t),
+        Err(e) => eprintln!("Error serializing config: {}", e),
+    }
     println!("\nComplete example configuration with all options:\n-----------------------------------------------");
     let mut example_symbols = HashMap::new();
     example_symbols.insert("cwd".to_string(), "📁 ".to_string());
@@ -188,10 +229,17 @@ pub fn dump_config() {
         threshold_yellow: 500,
         threshold_orange: 1000,
         colors: Some(Colors::default()),
-        visual: Some(Visual { head: Some("🦊".to_string()), tail: Some("🦊".to_string()), separator: Some(" | ".to_string()) }),
+        visual: Some(Visual {
+            head: Some("🦊".to_string()),
+            tail: Some("🦊".to_string()),
+            separator: Some(" | ".to_string()),
+        }),
         format: default_format(),
         light_background: Some(true),
-        warning_message: Some("⚠ Context warning: {used_pct}% used in first minute ({used_k}k/{total_k}k) ⚠".to_string()),
+        warning_message: Some(
+            "⚠ Context warning: {used_pct}% used in first minute ({used_k}k/{total_k}k) ⚠"
+                .to_string(),
+        ),
     };
     match toml::to_string(&example_config) {
         Ok(t) => {

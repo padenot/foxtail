@@ -4,3 +4,14 @@ Cargo.lock
 *.swo
 *~
 .DS_Store
+.bash_profile
+.bashrc
+.gitconfig
+.gitmodules
+.idea
+.mcp.json
+.profile
+.ripgreprc
+.vscode
+.zprofile
+.zshrc

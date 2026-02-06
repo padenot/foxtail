@@ -44,4 +44,3 @@ pub struct CurrentUsage {
     pub cache_creation_input_tokens: u32,
     pub cache_read_input_tokens: u32,
 }
-

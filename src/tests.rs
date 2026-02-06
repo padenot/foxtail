@@ -17,9 +17,18 @@ fn test_hsl_percent_parsing() {
 fn test_warning_message_customization_plain() {
     let d = StatusInput {
         cwd: "/tmp".to_string(),
-        model: Model { display_name: "M".to_string() },
-        workspace: Workspace { current_dir: "/tmp".to_string() },
-        cost: Cost { total_cost_usd: 0.0, total_duration_ms: 30_000, total_lines_added: 0, total_lines_removed: 0 },
+        model: Model {
+            display_name: "M".to_string(),
+        },
+        workspace: Workspace {
+            current_dir: "/tmp".to_string(),
+        },
+        cost: Cost {
+            total_cost_usd: 0.0,
+            total_duration_ms: 30_000,
+            total_lines_added: 0,
+            total_lines_removed: 0,
+        },
         context_window: ContextWindow {
             context_window_size: 200_000,
             used_percentage: 42.0,
@@ -29,7 +38,7 @@ fn test_warning_message_customization_plain() {
     };
     let mut cfg = Config::default();
     cfg.warning_message = Some("warn {used_pct}% {used_k}k/{total_k}k".to_string());
-    let out = render_warning(&d, &cfg, (0,0,0), false, false);
+    let out = render_warning(&d, &cfg, (0, 0, 0), false, false);
     assert!(out.contains("warn 42.0% 84k/200k"));
 }
 
