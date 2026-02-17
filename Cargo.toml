@@ -3,7 +3,7 @@ members = ["."]
 
 [package]
 name = "foxtail"
-version = "0.1.3"
+version = "0.1.4"
 edition = "2021"
 description = "Status line for Claude Code users at Mozilla"
 repository = "https://github.com/padenot/foxtail"
@@ -23,7 +23,7 @@ nu-ansi-term = "0.50"
 toml = "0.8"
 dirs = "5.0"
 clap = { version = "4.5", features = ["derive"] }
-moz-cli-version-check = "0.1"
+moz-cli-version-check = "0.2"
 
 [[bin]]
 name = "foxtail"
