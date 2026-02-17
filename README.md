@@ -23,6 +23,13 @@ Install the binary:
 ```bash
 cargo install foxtail
 ```
+
+or using [cargo-binstall](https://github.com/cargo-bins/cargo-binstall):
+
+```bash
+cargo binstall foxtail
+```
+
 or from a local copy:
 
 ```bash
