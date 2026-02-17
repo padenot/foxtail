@@ -36,8 +36,10 @@ fn test_warning_message_customization_plain() {
             current_usage: None,
         },
     };
-    let mut cfg = Config::default();
-    cfg.warning_message = Some("warn {used_pct}% {used_k}k/{total_k}k".to_string());
+    let cfg = Config {
+        warning_message: Some("warn {used_pct}% {used_k}k/{total_k}k".to_string()),
+        ..Default::default()
+    };
     let out = render_warning(&d, &cfg, (0, 0, 0), false, false);
     assert!(out.contains("warn 42.0% 84k/200k"));
 }
