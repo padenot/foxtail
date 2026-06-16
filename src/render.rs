@@ -173,7 +173,7 @@ pub fn build_replacements<'a>(
     bg_rgb: (u8, u8, u8),
     light: bool,
     color_enabled: bool,
-) -> [(&'static str, String); 11] {
+) -> [(&'static str, String); 12] {
     let sym = |k| get_symbol(k, cfg);
     [
         ("head",        cfg.visual.as_ref().and_then(|v| v.head.clone()).unwrap_or_else(|| fox_head(color_enabled))),
@@ -188,6 +188,9 @@ pub fn build_replacements<'a>(
         ("cost",        paint_with(&col.cost, format!("{}{:.3}", sym("cost"), d.cost.total_cost_usd), bg, color_enabled)),
         ("cache",       d.context_window.current_usage.as_ref()
             .map(|u| paint_with(&col.cache, format!("{}r:{:.0}k w:{:.0}k", sym("cache"), u.cache_read_input_tokens as f64 / 1000.0, u.cache_creation_input_tokens as f64 / 1000.0), bg, color_enabled))
+            .unwrap_or_default()),
+        ("profile",     std::env::var("ANTHROPIC_PROFILE").ok().filter(|p| !p.is_empty())
+            .map(|p| paint_with(&col.profile, format!("{}{}", sym("profile"), p), bg, color_enabled))
             .unwrap_or_default()),
     ]
 }

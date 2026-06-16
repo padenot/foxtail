@@ -21,6 +21,7 @@ pub struct Colors {
     pub delta: ColorSpec,
     pub cost: ColorSpec,
     pub cache: ColorSpec,
+    pub profile: ColorSpec,
     pub separator: ColorSpec,
 }
 
@@ -35,6 +36,7 @@ impl Default for Colors {
             delta: ColorSpec::Rgb(vec![0, 0, 0]),
             cost: ColorSpec::Rgb(vec![0, 0, 0]),
             cache: ColorSpec::Rgb(vec![0, 0, 0]),
+            profile: ColorSpec::Rgb(vec![0, 0, 0]),
             separator: ColorSpec::Rgb(vec![220, 100, 0]),
         }
     }
@@ -105,7 +107,7 @@ pub fn default_threshold_orange() -> u64 {
 }
 
 pub fn default_format() -> String {
-    "{head} | {model} | {cwdcompact} | {duration} | {ctx} | {gitdelta} | {claudedelta} | {cost} | {cache} | {tail}".to_string()
+    "{head} | {model} | {profile} | {cwdcompact} | {duration} | {ctx} | {gitdelta} | {claudedelta} | {cost} | {cache} | {tail}".to_string()
 }
 
 impl Default for Config {
@@ -141,6 +143,7 @@ pub fn get_symbol(key: &str, config: &Config) -> String {
         "delta" => ("Σ ", "Δ "),
         "cost" => ("💰 $", "$"),
         "cache" => ("🗄 ", "cache:"),
+        "profile" => ("👤 ", "profile:"),
         _ => ("", ""),
     };
     if config.use_emojis {
@@ -244,7 +247,7 @@ pub fn dump_config() {
     match toml::to_string(&example_config) {
         Ok(t) => {
             println!("{}", t);
-            println!("\nNote: Colors can be specified as:\n  - RGB arrays: [255, 140, 0]\n  - Hex strings: \"#ff8c00\" or \"#f80\"\n  - HSL strings: \"hsl(30, 100, 50)\"\n\nFormat placeholders:\n  {{head}} {{tail}} {{model}} {{cwd}} {{cwdcompact}} {{duration}}\n  {{ctx}} {{gitdelta}} {{claudedelta}} {{cost}} {{cache}}");
+            println!("\nNote: Colors can be specified as:\n  - RGB arrays: [255, 140, 0]\n  - Hex strings: \"#ff8c00\" or \"#f80\"\n  - HSL strings: \"hsl(30, 100, 50)\"\n\nFormat placeholders:\n  {{head}} {{tail}} {{model}} {{cwd}} {{cwdcompact}} {{duration}}\n  {{ctx}} {{gitdelta}} {{claudedelta}} {{cost}} {{cache}} {{profile}}\n\nThe {{profile}} placeholder shows the value of the ANTHROPIC_PROFILE environment\nvariable. It renders nothing (not even the prefix/emoji) when the variable is\nunset or empty.");
         }
         Err(e) => eprintln!("Error serializing example: {}", e),
     }

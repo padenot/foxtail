@@ -126,6 +126,7 @@ pub fn get_colors(config_colors: Option<&Colors>, is_light_bg: bool) -> Colors {
                 delta: text_color.clone(),
                 cost: text_color.clone(),
                 cache: text_color.clone(),
+                profile: text_color.clone(),
                 separator: ColorSpec::Rgb(vec![220, 100, 0]),
             }
         }
@@ -142,6 +143,7 @@ pub fn validate_colors(colors: &Colors) -> Result<(), String> {
         &colors.delta,
         &colors.cost,
         &colors.cache,
+        &colors.profile,
         &colors.separator,
     ];
     for spec in specs {
@@ -176,6 +178,7 @@ pub fn adjust_colors_for_background(mut colors: Colors, is_light_bg: bool) -> Co
     colors.delta = adjust(&colors.delta, is_light_bg);
     colors.cost = adjust(&colors.cost, is_light_bg);
     colors.cache = adjust(&colors.cache, is_light_bg);
+    colors.profile = adjust(&colors.profile, is_light_bg);
     colors.separator = adjust(&colors.separator, is_light_bg);
     colors
 }
