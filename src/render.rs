@@ -185,7 +185,7 @@ pub fn build_replacements<'a>(
         ("ctx",         render_ctx(d.context_window.used_percentage, d.context_window.context_window_size, &sym("context"), bg, bg_rgb, light, color_enabled)),
         ("claudedelta", paint_with(&col.delta, format!("{}+{} -{}", sym("delta"), d.cost.total_lines_added, d.cost.total_lines_removed), bg, color_enabled)),
         ("gitdelta",    render_git(&d.cwd, cfg, &col.git_clean, bg, bg_rgb, light, color_enabled)),
-        ("cost",        paint_with(&col.cost, format!("{}{:.3}", sym("cost"), d.cost.total_cost_usd), bg, color_enabled)),
+        ("cost",        paint_with(&col.cost, format!("{}{:.2}", sym("cost"), d.cost.total_cost_usd), bg, color_enabled)),
         ("cache",       d.context_window.current_usage.as_ref()
             .map(|u| paint_with(&col.cache, format!("{}r:{:.0}k w:{:.0}k", sym("cache"), u.cache_read_input_tokens as f64 / 1000.0, u.cache_creation_input_tokens as f64 / 1000.0), bg, color_enabled))
             .unwrap_or_default()),
