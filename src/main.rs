@@ -1,11 +1,13 @@
 mod cli;
 mod colors;
 mod config;
+mod cost_log;
 mod git;
 mod render;
 mod types;
 
 use clap::Parser;
+use cost_log::log_cost;
 use std::io::{self, Read};
 
 // Re-exports for tests and external use
@@ -61,6 +63,10 @@ fn main() {
     io::stdin()
         .read_to_string(&mut input)
         .expect("Failed to read stdin");
+
+    if args.log_cost {
+        log_cost(&input);
+    }
 
     let data: StatusInput = match serde_json::from_str(&input) {
         Ok(d) => d,
