@@ -15,6 +15,9 @@ git status, session stats, cost, cache, etc.
   - `--background {auto|light|dark}` set background mode (auto uses config, defaults to dark)
   - `--color {auto|always|never}` control ANSI color (respects `NO_COLOR`, `CLICOLOR`, `CLICOLOR_FORCE` when `auto`)
   - `--no-git` disable Git integration regardless of config
+  - `--log-cost` append one `{"t":<receive time>,"c":<cost.total_cost_usd>}`
+    line per received status payload to `<session id>.cost.jsonl` next to the
+    session transcript
 
 ## Install
 

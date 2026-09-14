@@ -205,3 +205,42 @@ fn test_config_default() {
     assert_eq!(config.warn_high_initial_context_threshold, 20.0);
     assert!(config.symbols.is_empty());
 }
+
+#[test]
+fn test_cost_log_path() {
+    use crate::cost_log::log_path;
+
+    let v: serde_json::Value =
+        serde_json::from_str(r#"{"session_id":"abc","transcript_path":"/p/proj/abc.jsonl"}"#)
+            .unwrap();
+    assert_eq!(
+        log_path(&v).unwrap().to_str().unwrap(),
+        "/p/proj/abc.cost.jsonl"
+    );
+
+    let v: serde_json::Value = serde_json::from_str(r#"{"session_id":"abc"}"#).unwrap();
+    assert!(log_path(&v).is_none());
+}
+
+#[test]
+fn test_cost_log_line() {
+    use crate::cost_log::log_line;
+
+    let v: serde_json::Value = serde_json::from_str(
+        r#"{"cost":{"total_cost_usd":0.123},"context_window":{"used_percentage":1.0}}"#,
+    )
+    .unwrap();
+    let line = log_line(&v, "2026-09-13T09:20:45.521Z").unwrap();
+    assert_eq!(line, "{\"t\":\"2026-09-13T09:20:45.521Z\",\"c\":0.123}\n");
+    // Only the two fields of interest are kept.
+    let parsed: serde_json::Value = serde_json::from_str(&line).unwrap();
+    assert_eq!(parsed.as_object().unwrap().len(), 2);
+
+    // An integral cost must still serialize as valid JSON.
+    let v: serde_json::Value = serde_json::from_str(r#"{"cost":{"total_cost_usd":2.0}}"#).unwrap();
+    assert_eq!(log_line(&v, "T").unwrap(), "{\"t\":\"T\",\"c\":2}\n");
+
+    // No cost means nothing to log.
+    let v: serde_json::Value = serde_json::from_str(r#"{"session_id":"abc"}"#).unwrap();
+    assert!(log_line(&v, "T").is_none());
+}

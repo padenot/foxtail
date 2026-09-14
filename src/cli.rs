@@ -36,5 +36,10 @@ pub struct Args {
 
     #[arg(long = "no-git")]
     pub no_git: bool,
+
+    /// Append one {"t":<receive time>,"c":<total cost usd>} line per received
+    /// status payload to <session id>.cost.jsonl next to the transcript.
+    #[arg(long = "log-cost")]
+    pub log_cost: bool,
     // ASCII flag removed: always render the fun fox art when possible
 }
