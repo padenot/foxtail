@@ -5,11 +5,16 @@ description: Tag a new version, make a new release
 
 # Release Process
 
-1. Bump version in `Cargo.toml`
-2. Run `cargo fmt`
-3. Run `cargo clippy --all-targets --all-features` (must be clean)
-4. Run `cargo build --release` (must succeed)
-5. Commit: `git commit -am "Bump version to X.Y.Z"`
-6. Tag: `git tag -a vX.Y.Z -m "Release vX.Y.Z\n\n- Feature 1\n- Feature 2"`
-7. Push: `git push origin main && git push origin vX.Y.Z`
-8. Publish to crates.io: `cargo publish`
+Run:
+
+```
+CARGO_REGISTRY_TOKEN=<token> just release X.Y.Z
+```
+
+This bumps the version, runs fmt/clippy/build, commits, tags, pushes, and
+publishes to crates.io.
+
+Pushing the tag triggers `.github/workflows/release.yml`, which builds binaries
+for all supported targets and attaches them to the GitHub release. That release
+must exist with those assets or `cargo binstall foxtail` will fail, so check
+`gh release view vX.Y.Z` afterwards.

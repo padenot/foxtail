@@ -13,7 +13,6 @@ license = "MIT OR Apache-2.0"
 [package.metadata.binstall]
 pkg-url = "{ repo }/releases/download/v{ version }/{ name }-{ version }-{ target }.{ archive-format }"
 bin-dir = "{ bin }{ binary-ext }"
-pkg-fmt = "tgz"
 
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
