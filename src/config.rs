@@ -107,7 +107,7 @@ pub fn default_threshold_orange() -> u64 {
 }
 
 pub fn default_format() -> String {
-    "{head} | {model} | {profile} | {cwdcompact} | {duration} | {ctx} | {gitdelta} | {claudedelta} | {cost} | {cache} | {tail}".to_string()
+    "{head} | {model} | {cost} | {profile} | {cwdcompact} | {duration} | {ctx} | {gitdelta} | {claudedelta} | {cache} | {tail}".to_string()
 }
 
 impl Default for Config {
